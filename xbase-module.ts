@@ -12,4 +12,4 @@ import { Xbase } from './xbase';
   ],
   providers: [ Xbase ]
 })
-export class XbaseModule {}
+export class XbaseApiModule {}

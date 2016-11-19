@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { Storage } from '@ionic/storage';
 
 
 @Injectable()
@@ -8,7 +9,8 @@ export class Xbase {
     serverUrl: string = 'http://127.0.0.1/xbase/index.php';
 
     constructor(
-        private http: Http
+        private http: Http,
+        private storage: Storage
     ) {
         console.log("Xbase::constrcutor");
     }
@@ -86,14 +88,20 @@ export class Xbase {
         let data = { mc: 'user.get', id: id};
         this.query( data, successCallback, errorCallback );
     }
+
+
+    /**
+     * @attention it saves user's session id in storage.
+     *      the key is 'xbase-session-id'.
+     * 
+     */
     user_register( data, successCallback: (re:any) => void, errorCallback: (error:string) => void ) {
         data['mc'] = 'user.register';
-        this.query( data, successCallback, errorCallback );
+        this.query( data, session_id => {
+            this.storage.set('xbase-sessoin-id', session_id);
+            successCallback( session_id );
+        }, errorCallback );
     }
-
-
-
-
 
 
     http_build_query (formdata, numericPrefix='', argSeparator='') { 

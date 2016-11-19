@@ -93,10 +93,17 @@ export class XbaseTestPage {
 
 
     test_user_register() {
-        this.xbase.user_register( {}, re => {
-
+        console.log('test_user_register()');
+        let id = 'user1126';
+        let registerData = {
+            id: id,
+            password: '12345',
+            email: id + '@gmail.com'
+        }
+        this.xbase.user_register( registerData, re => {
+            this.pass( 'test_user_register success: session_id: ' + re.toString());
         }, e => {
-
+            this.fail("test_user_register failed: " + e );
         })
     }
 

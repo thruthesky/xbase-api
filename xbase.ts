@@ -86,6 +86,10 @@ export class Xbase {
         let data = { mc: 'user.get', id: id};
         this.query( data, successCallback, errorCallback );
     }
+    user_register( data, successCallback: (re:any) => void, errorCallback: (error:string) => void ) {
+        data['mc'] = 'user.register';
+        this.query( data, successCallback, errorCallback );
+    }
 
 
 

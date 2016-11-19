@@ -1,19 +1,28 @@
+import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
 import { Xbase } from './xbase';
-export class XbaseTest {
+@Component({
+    template: `
+        THIS IS TEST TEMPLATE
+    `
+})
+export class XbaseTestPage {
     private count = 0;
-    private xbase: Xbase;
-    constructor( xbase ) {
-        this.xbase = xbase;
-
-
+    constructor( private navParams: NavParams, private xbase: Xbase ) {
+        let method = navParams.get('method');
+        if ( method ) {
+            this[method]();
+        }
+        else this.run();
     }
 
     run() {
+        this.test_user_register();
+        this.test_user_get();
+        this.test_post_get();
         this.test_post_write();
         this.test_post_search();
         this.test_user_search();
-        this.test_user_get();
-        this.test_post_get();
     }
     pass( msg ) {
         this.count ++;
@@ -80,6 +89,15 @@ export class XbaseTest {
                 this.fail('user search failed: ' + e);
             }
         );
+    }
+
+
+    test_user_register() {
+        this.xbase.user_register( {}, re => {
+
+        }, e => {
+
+        })
     }
 
     test_post_get() {

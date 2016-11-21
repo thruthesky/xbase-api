@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Xbase {
 
-    serverUrl: string = 'http://127.0.0.1/xbase/index.php';
+    serverUrl: string = 'http://w8.philgo.com/etc/xbase/index.php';
 
     constructor(
         private http: Http,
@@ -95,13 +95,36 @@ export class Xbase {
      *      the key is 'xbase-session-id'.
      * 
      */
-    user_register( data, successCallback: (re:any) => void, errorCallback: (error:string) => void ) {
+    user_register( data, successCallback: (session_id:string) => void, errorCallback: (error:string) => void ) {
         data['mc'] = 'user.register';
         this.query( data, session_id => {
-            this.storage.set('xbase-sessoin-id', session_id);
+            this.storage.set('xbase-session-id', session_id);
             successCallback( session_id );
         }, errorCallback );
     }
+    /**
+     * Login and save login session id
+     */
+    user_login( data, successCallback: (session_id:string) => void, errorCallback: (error:string) => void ) {
+        data['mc'] = 'user.login';
+        this.query( data, session_id => {
+            this.storage.set('xbase-session-id', session_id);
+            successCallback( session_id );
+        }, errorCallback );
+    }
+
+
+    /**
+     * Check if the user logged in xbase
+     */
+    logged( yesCallback: ( session_id: string ) => void, noCallback?: () => void ) {
+        this.storage.get('xbase-session-id')
+            .then( session_id => {
+                if ( session_id ) yesCallback( session_id );
+                else noCallback();
+            });
+    }
+
 
 
     http_build_query (formdata, numericPrefix='', argSeparator='') { 

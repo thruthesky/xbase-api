@@ -6,8 +6,8 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Xbase {
 
-    serverUrl: string = 'http://w8.philgo.com/etc/xbase/index.php';
-
+    //serverUrl: string = 'http://w8.philgo.com/etc/xbase/index.php';
+    serverUrl: string = 'http://www.work.org/xbase/index.php';
     constructor(
         private http: Http,
         private storage: Storage
@@ -44,7 +44,7 @@ export class Xbase {
 
     query( data, successCallback, errorCallback ) {
         let body = this.buildQuery( data );
-        //console.log("debug url: ", this.serverUrl  + '?' + body );
+        console.log("debug url: ", this.serverUrl  + '?' + body );
         this.http.post( this.serverUrl, body, this.requestOptions )
             .subscribe( data => {
                 try {

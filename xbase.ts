@@ -71,6 +71,16 @@ export class Xbase {
         this.query( data, successCallback, errorCallback );
     }
 
+    post_delete( data, successCallback: () => void, errorCallback: (error:string) => void ) {
+        data['mc'] = 'post.delete';
+        this.query( data, successCallback, errorCallback );
+    }
+
+    post_permission( data, successCallback: () => void, errorCallback: (error:string) => void ) {
+        data['mc'] = 'post.permission';
+        this.query( data, successCallback, errorCallback );
+    }
+
     post_search( options, successCallback: (re:any) => void, errorCallback: (error:string) => void ) {
         let data = {};
         data['mc'] = 'post.search';

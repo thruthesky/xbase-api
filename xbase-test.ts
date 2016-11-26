@@ -1,15 +1,23 @@
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { ActivatedRoute } from '@angular/router';
+
 import { Xbase } from './xbase';
 @Component({
     template: `
-        THIS IS TEST TEMPLATE
+        <h1>Xbase Test</h1>
+        <nav>
+        <a routerLink="/two" routerLinkActive="active">Page Two</a>
+        <a routerLink="/">Home</a><br>
+        <a routerLink="/test/xbase">Run All Tests</a><br>
+        <a routerLink="/test/xbase/test_user_register">test user_register </a><br>
+        <a routerLink="/test/xbase/test_post_get">test post get</a><br>
+        </nav>
     `
 })
 export class XbaseTestPage {
     private count = 0;
-    constructor( private navParams: NavParams, private xbase: Xbase ) {
-        let method = navParams.get('method');
+    constructor( private route: ActivatedRoute, private xbase: Xbase ) {
+        let method = route.snapshot.params['method'];
         if ( method ) {
             this[method]();
         }

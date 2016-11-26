@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
 import { Xbase } from './xbase';
 import { XbaseTestPage } from './xbase-test';
 
-export let LINKS = [
-        { component: XbaseTestPage, name: 'XbaseTest', segment: 'test/xbase' },
-        { component: XbaseTestPage, name: 'XbaseTest', segment: 'test/xbase/:method' }
+export let ROUTES = [
+        { path: "test/xbase", component: XbaseTestPage, name: 'XbaseTest' },
+        { path: "test/xbase/:method", component: XbaseTestPage, name: 'XbaseTest' }
 ];
 
 @NgModule({
   declarations: [
     XbaseTestPage
   ],
-  imports: [
-      IonicModule
-  ],
+  imports: [],
   entryComponents: [
     XbaseTestPage
   ],

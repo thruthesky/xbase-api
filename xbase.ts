@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { Storage } from '@ionic/storage';
 
-
+const XBASE_SESSION_ID = 'xbase-session-id';
 @Injectable()
 export class Xbase {
 
     serverUrl: string = 'http://w8.philgo.com/etc/xbase/index.php';
     //serverUrl: string = 'http://www.work.org/xbase/index.php';
     constructor(
-        private http: Http,
-        private storage: Storage
+        private http: Http
     ) {
         console.log("Xbase::constrcutor");
     }
@@ -113,7 +111,7 @@ export class Xbase {
     user_register( data, successCallback: (session_id:string) => void, errorCallback: (error:string) => void ) {
         data['mc'] = 'user.register';
         this.query( data, session_id => {
-            this.storage.set('xbase-session-id', session_id);
+            localStorage.setItem( XBASE_SESSION_ID, session_id );
             successCallback( session_id );
         }, errorCallback );
     }
@@ -123,7 +121,7 @@ export class Xbase {
     user_login( data, successCallback: (session_id:string) => void, errorCallback: (error:string) => void ) {
         data['mc'] = 'user.login';
         this.query( data, session_id => {
-            this.storage.set('xbase-session-id', session_id);
+            localStorage.setItem( XBASE_SESSION_ID, session_id );
             successCallback( session_id );
         }, errorCallback );
     }
@@ -133,11 +131,9 @@ export class Xbase {
      * Check if the user logged in xbase
      */
     logged( yesCallback: ( session_id: string ) => void, noCallback?: () => void ) {
-        this.storage.get('xbase-session-id')
-            .then( session_id => {
-                if ( session_id ) yesCallback( session_id );
-                else noCallback();
-            });
+        let session_id = localStorage.getItem( XBASE_SESSION_ID );
+        if ( session_id ) yesCallback( session_id );
+        else noCallback();
     }
 
 
